@@ -12,7 +12,7 @@ const config = require('config');
 router.post(
     '/',
 [
-    check('name','Name is requried')
+    check('first_name','Name is requried')
     .not()
     .isEmpty(),
     check('email','Email is required').isEmail(),
@@ -24,7 +24,7 @@ router.post(
         return res.status(400).json({errors: errors.array() });
     }
 
-    const { name,email,password } = req.body;
+    const { first_name,last_name,email,password } = req.body;
     try{
     // See if user exits
         let user = await User.findOne({ email });
@@ -39,7 +39,8 @@ router.post(
         });
 
         user = new User({
-            name,
+            first_name,
+            last_name,
             email,
             avatar,
             password
